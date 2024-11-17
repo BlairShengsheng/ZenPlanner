@@ -14,6 +14,12 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    # Add relationship
+    # tasks = db.relationship('Task', back_populates='user', cascade='all, delete-orphan')
+    tasks = db.relationship('Task', back_populates='user')
+    habits = db.relationship('Habit', back_populates='user')
+    timeblocks = db.relationship('TimeBlock', back_populates='user', cascade='all, delete-orphan')
+
     @property
     def password(self):
         return self.hashed_password

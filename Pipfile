@@ -27,6 +27,7 @@ flask-sqlalchemy = "*"
 flask-login = "*"
 flask-wtf = "*"
 flask-cors = "*"
+"sqlalchemy.orm" = "*"
 
 [dev-packages]
 
