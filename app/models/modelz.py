@@ -98,8 +98,8 @@ class TimeBlock(db.Model):
       'description': self.description,
       'start_time': self.start_time.strftime('%Y-%m-%d %H:%M:%S') if self.start_time else None,
       'end_time': self.end_time.strftime('%Y-%m-%d %H:%M:%S') if self.end_time else None,
-      'created_at': self.created_at.strftime('%m/%d/%Y') if self.created_at else None,
-      'updated_at': self.updated_at.strftime('%m/%d/%Y') if self.updated_at else None,
+      # 'created_at': self.created_at.strftime('%m/%d/%Y') if self.created_at else None,
+      # 'updated_at': self.updated_at.strftime('%m/%d/%Y') if self.updated_at else None,
       'user_id': self.user_id,
       'user': self.user.to_dict()
     }
