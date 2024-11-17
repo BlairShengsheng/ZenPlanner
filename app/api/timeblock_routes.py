@@ -9,7 +9,7 @@ timeblock_routes = Blueprint('timeblocks', __name__)
 @timeblock_routes.route('/', methods=['GET'])
 @login_required
 def get_timeblocks():
-    timeblocks = TimeBlock.query.filter_by(user_id=current_user.id).all()
+    timeblocks = TimeBlock.query.filter_by(user_id = current_user.id).all()
     return jsonify([timeblock.to_dict() for timeblock in timeblocks])
 
 # POST /api/timeblocks - Create new timeblock
@@ -27,11 +27,11 @@ def create_timeblock():
         end_time = datetime.strptime(data['end_time'], '%Y-%m-%d %H:%M:%S')
         
         timeblock = TimeBlock(
-            user_id=current_user.id,
-            name=data['name'],
-            description=data.get('description', ''),
-            start_time=start_time,
-            end_time=end_time
+            user_id = current_user.id,
+            name = data['name'],
+            description = data.get('description', ''),
+            start_time = start_time,
+            end_time = end_time
         )
         
         db.session.add(timeblock)
@@ -48,8 +48,8 @@ def create_timeblock():
 @login_required
 def get_timeblock(timeblock_id):
     timeblock = TimeBlock.query.filter_by(
-        id=timeblock_id,
-        user_id=current_user.id
+        id = timeblock_id,
+        user_id = current_user.id
     ).first_or_404()
     return jsonify(timeblock.to_dict())
 
@@ -58,8 +58,8 @@ def get_timeblock(timeblock_id):
 @login_required
 def update_timeblock(timeblock_id):
     timeblock = TimeBlock.query.filter_by(
-        id=timeblock_id,
-        user_id=current_user.id
+        id = timeblock_id,
+        user_id = current_user.id
     ).first_or_404()
     
     data = request.get_json()
@@ -85,8 +85,8 @@ def update_timeblock(timeblock_id):
 @login_required
 def delete_timeblock(timeblock_id):
     timeblock = TimeBlock.query.filter_by(
-        id=timeblock_id,
-        user_id=current_user.id
+        id = timeblock_id,
+        user_id = current_user.id
     ).first_or_404()
     
     db.session.delete(timeblock)
@@ -104,7 +104,7 @@ def get_timeblocks_range():
         start_date = datetime.strptime(start, '%Y-%m-%d') if start else None
         end_date = datetime.strptime(end, '%Y-%m-%d') if end else None
         
-        query = TimeBlock.query.filter_by(user_id=current_user.id)
+        query = TimeBlock.query.filter_by(user_id = current_user.id)
         
         if start_date:
             query = query.filter(TimeBlock.start_time >= start_date)
