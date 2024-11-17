@@ -22,12 +22,12 @@ sqlalchemy = "==1.4.46"
 werkzeug = "==2.2.2"
 wtforms = "==3.0.1"
 zipp = "==3.17.0"
-flask-migrate = "*"
 flask-sqlalchemy = "*"
 flask-login = "*"
 flask-wtf = "*"
 flask-cors = "*"
 "sqlalchemy.orm" = "*"
+flask-migrate = "*"
 
 [dev-packages]
 
