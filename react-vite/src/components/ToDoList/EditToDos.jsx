@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { editATaskThunk, setAllTasksThunk, setOneTaskThunk } from '../../redux/tasks';
 
+
 const EditConfirmationModal = ({ show, onClose, todoData }) => {
   const dispatch = useDispatch();
 
@@ -23,10 +24,10 @@ const EditConfirmationModal = ({ show, onClose, todoData }) => {
     }
   }, [show, todoData]);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setPriority(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   e.preventDefault();
+  //   setPriority(e.target.value);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -104,7 +105,7 @@ const EditConfirmationModal = ({ show, onClose, todoData }) => {
                       name="priority"
                       value={level}
                       checked={priority === level}
-                      onChange={handleChange}
+                      onChange={(e) => setPriority(e.target.value)}
                     />
                     <span className={`priority-btn ${level}`}>{level}</span>
                   </label>

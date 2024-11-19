@@ -37,7 +37,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { createATaskThunk, setAllTasksThunk } from '../../redux/tasks';
 
-import { useNavigate, Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 //! --------------------------------------------------------------------
@@ -126,21 +126,7 @@ export const CreateTask = () => {
   };
 
 
-   //----------------------------------------------------------task preview section "left-panel"
-   //  const sessionUser = useSelector(state => state.session.user);
-  const tasksObj = useSelector(state => state.tasks.allTasks);
-
-  const TaskObjArray = Object.values(tasksObj || {}).filter(task => task && task.user_id === sessionUser?.id);
-
-  useEffect(() => {
-    
-    if (sessionUser) {
-      console.log("Fetching tasks for user:", sessionUser.id);
-      dispatch(setAllTasksThunk());
-    }
-  }, [dispatch, sessionUser]);
- //----------------------------------------------------------task preview section "left-panel"
-
+ 
 
 
 
@@ -157,29 +143,10 @@ export const CreateTask = () => {
 
       <div className="create-task-container">
 
-        <div className="left-panel">
-          {TaskObjArray && TaskObjArray.length > 0 ? (TaskObjArray.map((singleTaskObj, i) => (
-              <div key={i} className="task-preview">
-                <Link to={`/tasks/${singleTaskObj.id}`}>
-                  <h3>{singleTaskObj.name}</h3>
-                  <p>{singleTaskObj.description}</p>
-                </Link>
-              </div>
-            ))
-              ) : (
-                <div className="task-preview">
-                  <h3>Task Title</h3>
-                  <p>preview here.</p>
-                </div>
-              )}
 
- 
-      
-
-        </div>
 
         <div className="right-panel">
-          <h2>CREATE A TASK</h2>
+          <h2>CREATE A To Do Task</h2>
 
            <div className="form-container">
 

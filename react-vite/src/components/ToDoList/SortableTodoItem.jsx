@@ -1,8 +1,11 @@
 // SortableTodoItem.jsx
+import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 export const SortableTodoItem = ({ todo, onUpdate, onDelete }) => {
+  const [isCompleted, setIsCompleted] = useState(false);// add this 
+
   const {
     attributes,
     listeners,
@@ -23,11 +26,17 @@ export const SortableTodoItem = ({ todo, onUpdate, onDelete }) => {
     touchAction: 'none'
   };
 
+  // add handleCheckboxChange function for "completed"
+  const handleCheckboxChange = (e) => {
+    e.stopPropagation();
+    setIsCompleted(e.target.checked);
+  }
+
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className="todo-card-wrapper"
+      className={`todo-card-wrapper ${isCompleted ? 'completed' : ''}`}// change this line
     >
       <div 
         {...attributes}
@@ -41,10 +50,19 @@ export const SortableTodoItem = ({ todo, onUpdate, onDelete }) => {
         <input 
           type="checkbox" 
           className="checkbox"
+          checked={isCompleted}// add this line
+          onChange={handleCheckboxChange}// add this line
           onClick={(e) => e.stopPropagation()}
         />
-        <h3>{todo.name}</h3>
-        <p>{todo.description}</p>
+
+        {/* add another div */}
+        <div className={`todo-text ${isCompleted ? 'completed': ''}`}> 
+          <h3>{todo.name}</h3>
+          <p>{todo.description}</p>
+          {/* Add proper priority styling */}
+          <span className={`priority-tag ${todo.priority}`}>{todo.priority?.toUpperCase()}</span>
+        </div>
+
       </div>
       
       <div className="action-button">

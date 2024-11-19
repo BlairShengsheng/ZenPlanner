@@ -1,5 +1,5 @@
 .todo-card-wrapper {
-  background: white;
+  background: rgb(226, 218, 239);
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 16px;
@@ -9,6 +9,13 @@
   gap: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   position: relative;
+  transition: all 0.3s ease;
+}
+
+.todo-card-wrapper.completed {
+  background-color: lightgray;
+  border-color:  #dee2e6;
+  opacity: 0.8;
 }
 
 .drag-handle {
@@ -22,23 +29,57 @@
 .todo-content {
   flex: 1;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  align-items: flex-start;
   gap: 16px;
+}
+
+.todo-text {
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.todo-text.completed h3,
+.todo-text.completed p {
+  text-decoration: line-through;
+  color: #6c757d;
+
+  position: relative;/* add this line */
+}
+
+.todo-text.completed h3::after,
+.todo-text.completed p::after {
+  content: ""; /* No additional text, just a line */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%; /* Place the line in the middle */
+  height: 2px; /* Thickness of the line */
+  background-color: #6c757d; /* Same color as dimmed text */
+  z-index: 1; /* Ensures the line is above the text */
+
 }
 
 .todo-content h3 {
   margin: 0;
+  font-size: 1.1rem;
+  color:#2c3e50;
+  transition: all 0.3s ease;
 }
 
 .todo-content p {
-  margin: 4px 0 0 0;
+  margin: 4px 0 8px 0;
   color: #666;
+  transition: all 0.3s ease;
 }
 
 .checkbox {
   width: 20px;
   height: 20px;
   margin: 0;
+  cursor: pointer;
+  position: relative;
+  top: 3px;
 }
 
 .action-button {
@@ -96,4 +137,96 @@
   min-width: 300px;
   max-width: 500px;
   width: 90%;
+}
+
+
+/* priority CSS */
+.priority-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 4px;
+  transition: all 0.3s ease; /* add this line */
+}
+
+.priority-tag.high {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.priority-tag.medium {
+  background-color: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ffcc80;
+}
+
+.priority-tag.low {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.priority-options {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.priority-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.priority-label input[type="radio"] {
+  display: none;
+}
+
+.priority-btn {
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: all 0.2s;
+}
+
+/* Priority button states */
+.priority-label input[type="radio"]:checked + .priority-btn.high {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.priority-label input[type="radio"]:checked + .priority-btn.medium {
+  background-color: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ffcc80;
+}
+
+.priority-label input[type="radio"]:checked + .priority-btn.low {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+/* Unchecked states */
+.priority-btn.high {
+  border: 1px solid #ffcdd2;
+  color: #c62828;
+}
+
+.priority-btn.medium {
+  border: 1px solid #ffe0b2;
+  color: #ef6c00;
+}
+
+.priority-btn.low {
+  border: 1px solid #c8e6c9;
+  color: #2e7d32;
 }

@@ -4,10 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllTasksThunk, deleteATaskThunk } from "../../redux/tasks";
 import DeleteConfirmationModal from "./DeleteToDos";
 import EditConfirmationModal from "./EditToDos";
+
 import { DndContext, TouchSensor, PointerSensor, KeyboardSensor, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+
 import { SortableTodoItem } from "./SortableTodoItem";
 import "./list.css"
+
+
+
 
 export const ViewAllToDoList = () => {
   const dispatch = useDispatch();
@@ -99,7 +104,7 @@ export const ViewAllToDoList = () => {
       >
         <div className="ToDos-Column">
           {todos.length > 0 ? (
-            <SortableContext items={todos} strategy={verticalListSortingStrategy}>
+          <SortableContext items={todos} strategy={verticalListSortingStrategy}>
               {todos.map((todo) => (
                 <SortableTodoItem
                   key={todo.id}
