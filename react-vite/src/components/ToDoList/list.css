@@ -1,0 +1,99 @@
+.todo-card-wrapper {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.drag-handle {
+  cursor: grab;
+  padding: 0 8px;
+  color: #666;
+  font-size: 20px;
+  user-select: none;
+}
+
+.todo-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.todo-content h3 {
+  margin: 0;
+}
+
+.todo-content p {
+  margin: 4px 0 0 0;
+  color: #666;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+.action-button {
+  display: flex;
+  gap: 8px;
+}
+
+.update-btn,
+.delete-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.update-btn {
+  background: #4a90e2;
+  color: white;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.update-btn:hover {
+  background: #357abd;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+/* Modal Styles */
+.modal-overlay,
+.modal-widow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  min-width: 300px;
+  max-width: 500px;
+  width: 90%;
+}

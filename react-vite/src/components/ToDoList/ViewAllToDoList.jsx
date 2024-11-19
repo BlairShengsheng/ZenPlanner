@@ -1,187 +1,43 @@
-// import { useState,useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// // import { useNavigate } from "react-router-dom"
-// import { setAllTasksThunk, deleteATaskThunk, editATaskThunk} from "../../redux/tasks";
-// import  DeleteConfirmationModal  from "./DeleteToDos";
-// import editConfirmationModal from "./EditToDos";
-
-
-// //! --------------------------------------------------------------------
-// //*                       ViewAllToDoList Component
-// //! --------------------------------------------------------------------
-
-// export const ViewAllToDoList = () => {
-//   const dispatch = useDispatch();
-//   // const navigate = useNavigate();
-
-//   const sessionUser = useSelector(state => state.session.user);
-//   const todoObj = useSelector(state => state.tasks.allTasks);
-
-//     // Convert ToDos object to array and filter for current user
-//   const ToDos = Object.values(todoObj || {}).filter(todo => todo && todo.user_id === sessionUser?.id)
-
-//   //for the edit(update), delete part state
-//   const [showModal, setShowModal] = useState(false);
-//   const [showUpdateModal, setUpdateModal] = useState(false)
-//   const [todoToDelete, setToDoDelete] = useState(null);
-//   const [todoToUpdate, setToDoUpdate] = useState(null);
-
-//   //validation state
-//   const [isLoading, setIsLoading] = useState(true);
-
-
-//   useEffect(() => {
-//     const loadToDoList = async () => {
-//       setIsLoading(true);
-
-//       try{
-//         if(sessionUser){
-//           console.log("Getting ToDos for user:", sessionUser.id);
-//           await dispatch(setAllTasksThunk());
-//         }
-//       } catch (error) {
-//         console.error('Error loading To Do List:', error);
-//       } finally {
-//         setIsLoading(false);
-//       }
-
-//     };
-
-//     loadToDoList();
-
-
-//   }, [dispatch, sessionUser]);
-
-//   if(isLoading) {
-//     return <div>Loading...</div>
-//   }
-//   if(!sessionUser){
-//     return <div>Please log in to view your To Do Lists</div>
-//   }
-
-
-//   //-------------update section--------------
-//   // const [todoToUpdate, setToDoUpdate] = useState(null);
-
-//   const handleUpdate = (todoData) => {
-//     setToDoUpdate(todoData);
-//     setUpdateModal(true);
-//   }
-
-//   const handleConfirmUpdate = () => {
-//     if(todoToUpdate){
-//       dispatch(editATaskThunk(todoToUpdate));
-//       dispatch(setAllTasksThunk());
-//       setUpdateModal(false);
-//     }
-//   }
-
-//   const handleCancelUpdate = () => {
-//     setUpdateModal(false);
-//   }
- 
-//   //-------------update section--------------
-
-
-
-
-//   //-------------delete section--------------
-//   const handleDelete = (todoId) => {
-//     setToDoDelete(todoId);
-//     setShowModal(true);
-//   }
-
-//   const handleConfirmDelete = () => {
-//     if(todoToDelete){
-//       dispatch(deleteATaskThunk(todoToDelete));
-//       dispatch(setAllTasksThunk());
-//       setShowModal(false);
-//     }
-//   }
-
-//   const handleCancelDelete = () => {
-//     setShowModal(false);
-//   }
-//   //-------------delete section--------------
-  
-
-//   //! --------------------------------------------------------------------
-//   //                         Return JSX HTML Part
-//   //! --------------------------------------------------------------------
-
-//   return (
-//     <div className="ToDos-Page">
-//       <h1>To Do List</h1>
-//       <div className="ToDos-Column">
-
-//         {ToDos && ToDos.length > 0 ?(
-//           ToDos.map((todo, i) => (
-
-//             <div key={i} className="todo-card-wrapper">
-//               <h3>{todo.name}</h3>
-//               <p>{todo.description}</p>
-
-//               <div className="action-button">
-//                 <button 
-//                   className="update-btn"
-//                   onClick={(e) => handleUpdate(e, todo.id)}
-
-//                 > Update 📝</button>
-
-//                 <button 
-//                   className="delete-btn"
-//                   onClick={() => handleDelete(todo.id)}
-//                 > Delete</button>
-              
-//               </div>
-//             </div>
-
-
-//           ))
-
-//         ):(
-//           <p>No to dos found. Create a new to do list to get started!</p>
-//         )}
-        
-
-//       </div>
-//       <editConfirmationModal
-//         show={showUpdateModal}
-//         onConfirm={handleConfirmUpdate}
-//         onCancel={handleCancelUpdate}
-//       />
-
-//       <DeleteConfirmationModal 
-//         show={showModal} 
-//         onConfirm={handleConfirmDelete} 
-//         onCancel={handleCancelDelete} 
-//       />
-
-//     </div>
-//   );
-// };
-
-
 // ViewAllToDoList.jsx
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllTasksThunk, deleteATaskThunk } from "../../redux/tasks";
 import DeleteConfirmationModal from "./DeleteToDos";
 import EditConfirmationModal from "./EditToDos";
+import { DndContext, TouchSensor, PointerSensor, KeyboardSensor, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { SortableTodoItem } from "./SortableTodoItem";
+import "./list.css"
 
 export const ViewAllToDoList = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const todoObj = useSelector(state => state.tasks.allTasks);
-
-  // Convert ToDos object to array and filter for current user
-  const ToDos = Object.values(todoObj || {}).filter(todo => todo && todo.user_id === sessionUser?.id);
-
+  
+  const [todos, setTodos] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 5,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  );
+
+  // Load initial todos
   useEffect(() => {
     const loadToDoList = async () => {
       setIsLoading(true);
@@ -195,58 +51,76 @@ export const ViewAllToDoList = () => {
         setIsLoading(false);
       }
     };
-
     loadToDoList();
   }, [dispatch, sessionUser]);
+
+  // Update local state when Redux state changes
+  useEffect(() => {
+    if (todoObj) {
+      const filteredTodos = Object.values(todoObj)
+        .filter(todo => todo && todo.user_id === sessionUser?.id);
+      setTodos(filteredTodos);
+    }
+  }, [todoObj, sessionUser]);
 
   if (isLoading) return <div>Loading...</div>;
   if (!sessionUser) return <div>Please log in to view your To Do Lists</div>;
 
-  const handleUpdate = (todo) => {
+  const handleEditClick = (todo, e) => {
+    e.stopPropagation();
     setSelectedTodo(todo);
     setShowEditModal(true);
   };
 
-  const handleDelete = (todo) => {
+  const handleDeleteClick = (todo, e) => {
+    e.stopPropagation();
     setSelectedTodo(todo);
     setShowDeleteModal(true);
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    setTodos((items) => {
+      const oldIndex = items.findIndex(item => item.id === active.id);
+      const newIndex = items.findIndex(item => item.id === over.id);
+      return arrayMove(items, oldIndex, newIndex);
+    });
   };
 
   return (
     <div className="ToDos-Page">
       <h1>To Do List</h1>
-      <div className="ToDos-Column">
-        {ToDos && ToDos.length > 0 ? (
-          ToDos.map((todo, i) => (
-            <div key={todo.id || i} className="todo-card-wrapper">
-              <h3>{todo.name}</h3>
-              <p>{todo.description}</p>
-              <div className="action-button">
-                <button 
-                  className="update-btn"
-                  onClick={() => handleUpdate(todo)}
-                >
-                  Update 📝
-                </button>
-                <button 
-                  className="delete-btn"
-                  onClick={() => handleDelete(todo)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No to dos found. Create a new to do list to get started!</p>
-        )}
-      </div>
+      <DndContext
+        sensors={sensors}
+        onDragEnd={handleDragEnd}
+        collisionDetection={closestCorners}
+      >
+        <div className="ToDos-Column">
+          {todos.length > 0 ? (
+            <SortableContext items={todos} strategy={verticalListSortingStrategy}>
+              {todos.map((todo) => (
+                <SortableTodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onUpdate={(e) => handleEditClick(todo, e)}
+                  onDelete={(e) => handleDeleteClick(todo, e)}
+                />
+              ))}
+            </SortableContext>
+          ) : (
+            <p>No to dos found. Create a new to do list to get started!</p>
+          )}
+        </div>
+      </DndContext>
 
       <EditConfirmationModal
         show={showEditModal}
         onClose={() => {
           setShowEditModal(false);
           setSelectedTodo(null);
+          dispatch(setAllTasksThunk());
         }}
         todoData={selectedTodo}
       />
@@ -254,9 +128,12 @@ export const ViewAllToDoList = () => {
       <DeleteConfirmationModal 
         show={showDeleteModal}
         onConfirm={async () => {
-          if (selectedTodo) {
-            await dispatch(deleteATaskThunk(selectedTodo.id));
-            await dispatch(setAllTasksThunk());
+          try {
+            if (selectedTodo?.id) {
+              await dispatch(deleteATaskThunk(selectedTodo.id));
+              await dispatch(setAllTasksThunk());
+            }
+          } finally {
             setShowDeleteModal(false);
             setSelectedTodo(null);
           }
