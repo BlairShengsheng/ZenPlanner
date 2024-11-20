@@ -4,6 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import { ViewAllToDoList } from '../components/ToDoList/ViewAllToDoList';
 import { CreateTask } from '../components/ToDoList/CreateToDos';
+import { CalendarContainer } from '../components/Calendar/CalendarContainer';
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <h1>Welcome!</h1>,
+        element:<CalendarContainer />
       },
       {
         path: "login",
