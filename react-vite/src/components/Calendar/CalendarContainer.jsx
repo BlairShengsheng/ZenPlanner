@@ -1,9 +1,11 @@
+// CalendarContainer.jsx
 import React, { useState } from 'react';
 import { YearlyCalendar } from './YearlyCalendar';
-// import { SchedulerCalendar } from './Calendar';
+import { MonthlyCalendar } from './MonthlyCalendar';
+import { DailyScheduler } from './DailyScheduler';
 
 export const CalendarContainer = () => {
-  const [view, setView] = useState('yearly'); // 'yearly' or 'monthly'
+  const [view, setView] = useState('yearly'); // 'yearly', 'monthly', or 'daily'
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleMonthSelect = (date) => {
@@ -11,31 +13,39 @@ export const CalendarContainer = () => {
     setView('monthly');
   };
 
+  const handleDaySelect = (date) => {
+    setSelectedDate(date);
+    setView('daily');
+  };
+
   const handleBackToYear = () => {
     setView('yearly');
   };
 
+  const handleBackToMonth = () => {
+    setView('monthly');
+  };
+
   return (
-    <div>
+    <div className="calendar-container">
       {view === 'yearly' ? (
         <YearlyCalendar onMonthSelect={handleMonthSelect} />
-      ) : (
+      ) : view === 'monthly' ? (
         <div>
-          <button 
-            onClick={handleBackToYear}
-            style={{
-              margin: '1rem',
-              padding: '0.5rem 1rem',
-              backgroundColor: '#4444ff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
+          <button onClick={handleBackToYear} className="back-button">
             Back to Year View
           </button>
-          {/* <SchedulerCalendar initialDate={selectedDate} /> */}
+          <MonthlyCalendar 
+            initialDate={selectedDate}
+            onDaySelect={handleDaySelect}
+          />
+        </div>
+      ) : (
+        <div>
+          <button onClick={handleBackToMonth} className="back-button">
+            Back to Month View
+          </button>
+          <DailyScheduler selectedDate={selectedDate} />
         </div>
       )}
     </div>
