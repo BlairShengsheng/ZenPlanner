@@ -1,6 +1,7 @@
 // ViewAllToDoList.jsx
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from 'react-router-dom';
 import { setAllTasksThunk, deleteATaskThunk } from "../../redux/tasks";
 import DeleteConfirmationModal from "./DeleteToDos";
 import EditConfirmationModal from "./EditToDos";
@@ -96,7 +97,10 @@ export const ViewAllToDoList = () => {
 
   return (
     <div className="ToDos-Page">
-      <h1>To Do List</h1>
+      <h1>To Do List
+      <NavLink to='/tasks/new' title="Create a new To Do List">  ✚</NavLink>
+      </h1>
+
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}

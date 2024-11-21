@@ -1,5 +1,5 @@
 // MonthlyCalendar.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './MonthlyCalendar.css';
 
 export const MonthlyCalendar = ({ initialDate, onDaySelect }) => {

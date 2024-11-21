@@ -8,6 +8,8 @@ import { CalendarContainer } from '../components/Calendar/CalendarContainer';
 import { CreateHabit } from '../components/Habit/CreateHabits';
 import { ViewAllHabit } from '../components/Habit/ViewAllHabits';
 
+import { CombinedPage } from '../components/CombineComponent/CombinePage';
+
 export const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -41,7 +43,12 @@ export const router = createBrowserRouter([
       {
         path: "habits/new",
         element: <CreateHabit />
+      },
+      {
+        path: "daily/",
+        element: <CombinedPage />
       }
+
     ],
   },
 ]);

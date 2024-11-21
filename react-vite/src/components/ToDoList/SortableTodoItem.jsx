@@ -45,16 +45,18 @@ export const SortableTodoItem = ({ todo, onUpdate, onDelete }) => {
       >
         ⋮⋮
       </div>
-      
-      <div className="todo-content">
-        <input 
+
+      <input 
           type="checkbox" 
           className="checkbox"
           checked={isCompleted}// add this line
           onChange={handleCheckboxChange}// add this line
           onClick={(e) => e.stopPropagation()}
-        />
+      />
 
+      
+      <div className="todo-content">
+ 
         {/* add another div */}
         <div className={`todo-text ${isCompleted ? 'completed': ''}`}> 
           <h3>{todo.name}</h3>
