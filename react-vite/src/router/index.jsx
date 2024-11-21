@@ -5,6 +5,8 @@ import Layout from './Layout';
 import { ViewAllToDoList } from '../components/ToDoList/ViewAllToDoList';
 import { CreateTask } from '../components/ToDoList/CreateToDos';
 import { CalendarContainer } from '../components/Calendar/CalendarContainer';
+import { CreateHabit } from '../components/Habit/CreateHabits';
+import { ViewAllHabit } from '../components/Habit/ViewAllHabits';
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,15 @@ export const router = createBrowserRouter([
       {
         path: "tasks/new",
         element: <CreateTask />
+      },
+      {
+        path: "habits/",
+        element:<ViewAllHabit />
+
+      },
+      {
+        path: "habits/new",
+        element: <CreateHabit />
       }
     ],
   },

@@ -1,0 +1,72 @@
+/* Modal overlay */
+.modal-window {
+  position: fixed;  /* Makes the modal stay in place even if page scrolls */
+  top: 0;          /* Position from top of viewport */
+  left: 0;         /* Position from left of viewport */
+  right: 0;        /* Position from right of viewport */
+  bottom: 0;       /* Position from bottom of viewport */
+  background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent dark overlay */
+  display: flex;   /* Uses flexbox for centering */
+  justify-content: center;  /* Centers horizontally */
+  align-items: center;      /* Centers vertically */
+  z-index: 1000;   /* Makes sure modal appears above other content */
+}
+
+/* Modal content */
+/* This styles the actual modal box */
+.modal-content {
+  background-color: white;  /* White background for modal box */
+  padding: 30px;           /* Space inside the modal */
+  border-radius: 8px;      /* Rounded corners */
+  min-width: 400px;        /* Minimum width of modal */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);/* Adds shadow for "floating" effect */
+}
+
+/* Question text */
+.modal-content h2 {
+  text-align: center;
+  font-size: 20px;
+  margin: 0;
+  margin-bottom: 20px;
+  color: #333;
+  background-color: #e0e0e0;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+/* Buttons container */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Button styles */
+.confirm-del-btn,
+.cancel-del-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.confirm-del-btn {
+  background-color: #666;
+  color: white;
+}
+
+.cancel-del-btn {
+  background-color: #e6dddd;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.confirm-del-btn:hover {
+  background-color: #555;
+}
+
+.cancel-del-btn:hover {
+  background-color: #f5f5f5;
+}

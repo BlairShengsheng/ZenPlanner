@@ -1,3 +1,5 @@
+
+import "./DeleteHabits.css";
 const DeleteConfirmedModal = ({ show, onConfirm, onCancel }) => {
   if(!show) return null;
 

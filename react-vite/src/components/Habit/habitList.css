@@ -1,0 +1,133 @@
+.habit-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.habit-page h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.habits-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.habit-item {
+  display: flex;
+  align-items: center;
+  background-color: rgba(230, 230, 250, 0.5);
+  padding: 15px 20px;
+  border-radius: 8px;
+  gap: 15px;
+}
+
+/* Checkbox styling */
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.checkbox:checked {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  position: relative;
+}
+
+.checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 16px;
+  left: 4px;
+  top: 0;
+}
+
+/* Content styling */
+.habit-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.habit-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.habit-description {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Priority tag styling */
+.priority-tag {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.priority-high {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.priority-medium {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.priority-low {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.update-btn,
+.delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  transition: opacity 0.2s;
+}
+
+.update-btn {
+  background-color: #71a1e9;
+}
+
+.delete-btn {
+  background-color: #e57373;
+}
+
+.update-btn:hover,
+.delete-btn:hover {
+  opacity: 0.9;
+}
+
+/* Menu dots */
+.menu-dots {
+  color: #666;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 5px;
+}

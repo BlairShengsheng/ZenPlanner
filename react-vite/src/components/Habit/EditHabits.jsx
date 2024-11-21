@@ -27,7 +27,7 @@ const EditConfirmedModal = ({ show, onClose, habitData }) => {
     e.preventDefault();
     setHasSubmitted(true);
 
-    const validationErrors = {};
+    let validationErrors = {};
     if(!name.trim()) validationErrors.name = "Name is required";
     if(!description.trim()) validationErrors.description = "Description is required";
 
