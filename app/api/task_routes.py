@@ -69,6 +69,7 @@ def update_task(task_id):
 
   task.name = data.get('name', task.name)
   task.description = data.get('description', task.description)
+  task.priority = data.get('priority', task.priority)
 
   db.session.commit()
   return jsonify(task.to_dict())

@@ -1,37 +1,3 @@
-// import { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { setAllTasksThunk, createATaskThunk } from "../../redux/tasks";
-// import { useNavigate } from "react-router-dom";
-
-// //! --------------------------------------------------------------------
-// //*                          CreateToDo Component
-// //! --------------------------------------------------------------------
-
-// // CreateToDos.jsx
-// export const CreateToDo = () => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const sessionUser = useSelector(state => state.session.user);
-
-
-//   useEffect(() => {
-//     //Redirect if not logged in
-//     if(!sessionUser) {
-//       navigate('/login');
-//     }
-//   }, [sessionUser, navigate]);
-
-//   const [name, setName] = useState("");
-//   const [description, setdescription] = useState("");
-//   const [priority, setPriority] = useState("low");
-
-//   //Validation state
-//   const [errors, setErrors] = useState({});
-//   const [hasSubmitted, setHasSubmitted] = useState(false);
-
-
-// }
-
 
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';

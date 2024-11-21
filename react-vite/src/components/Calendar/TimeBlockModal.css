@@ -21,6 +21,8 @@
 }
 
 .modal-content h2 {
+  width: 90%;
+
   margin: 0 0 20px 0;
   padding: 15px;
   background-color: #c4c4c4;
@@ -51,7 +53,7 @@
 }
 
 .form-input {
-  width: 100%;
+  width: 90%;
   padding: 8px 12px;
   background-color: #c4c4c4;
   border: none;

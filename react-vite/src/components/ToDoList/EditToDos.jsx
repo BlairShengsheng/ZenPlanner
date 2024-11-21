@@ -41,7 +41,7 @@ const EditConfirmationModal = ({ show, onClose, todoData }) => {
     if (Object.keys(validationErrors).length > 0) return;
 
     const updatedTodoData = {
-      id: todoData.id,
+      id: todoData.id, // remember to add this when it update sth
       name,
       description,
       priority
