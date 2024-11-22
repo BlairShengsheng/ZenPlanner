@@ -1,0 +1,192 @@
+.timeblock-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.timeblock-page h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+.timeblocks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.timeblock-card-wrapper {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #eee;
+}
+
+.timeblock-card-wrapper:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.timeblock-card-wrapper h3 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.timeblock-card-wrapper p {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.start-time-section,
+.end-time-section {
+  margin-bottom: 12px;
+}
+
+.start-time-section h4,
+.end-time-section h4 {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 4px 0;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.update-btn,
+.delete-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+  flex: 1;
+}
+
+.update-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.update-btn:hover {
+  background-color: #2980b9;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Loading state */
+.timeblock-page > div:first-child {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Empty state */
+.timeblocks-grid p {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .timeblocks-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeblock-page {
+    padding: 15px;
+  }
+  
+  .timeblock-card-wrapper {
+    padding: 15px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .update-btn,
+  .delete-btn {
+    width: 100%;
+  }
+}
+
+/* Time formatting */
+.start-time-section,
+.end-time-section {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #444;
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Optional: Add a nice hover effect for the time sections */
+.start-time-section:hover,
+.end-time-section:hover {
+  background: #eef2f7;
+}
+
+/* Optional: Add status indicators */
+.timeblock-card-wrapper::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2ecc71;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/* Optional: Add some nice transitions */
+.timeblock-card-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.timeblock-card-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #3498db, #2ecc71);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.timeblock-card-wrapper:hover::after {
+  opacity: 1;
+}

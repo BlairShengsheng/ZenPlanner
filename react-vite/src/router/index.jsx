@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
+
+
 import { ViewAllToDoList } from '../components/ToDoList/ViewAllToDoList';
 import { CreateTask } from '../components/ToDoList/CreateToDos';
 import { CalendarContainer } from '../components/Calendar/CalendarContainer';
@@ -9,6 +11,8 @@ import { CreateHabit } from '../components/Habit/CreateHabits';
 import { ViewAllHabit } from '../components/Habit/ViewAllHabits';
 
 import { CombinedPage } from '../components/CombineComponent/CombinePage';
+import { ViewAllTimeBlocks } from '../components/TimeBlock/ViewAllTimeBlocks';
+import { CreateTimeBlock } from '../components/TimeBlock/CreateTimeBlock';
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +20,6 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        
         element:<CalendarContainer />
       },
       {
@@ -38,7 +41,6 @@ export const router = createBrowserRouter([
       {
         path: "habits/",
         element:<ViewAllHabit />
-
       },
       {
         path: "habits/new",
@@ -47,6 +49,14 @@ export const router = createBrowserRouter([
       {
         path: "daily/",
         element: <CombinedPage />
+      },
+      {
+        path: "timeblocks/",
+        element: <ViewAllTimeBlocks />
+      },
+      {
+        path: "timeblocks/new",
+        element:<CreateTimeBlock />
       }
 
     ],

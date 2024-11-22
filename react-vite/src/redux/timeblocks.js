@@ -48,6 +48,7 @@ export const setAllTimeblocksThunk = () => async (dispatch) => {
     const response = await fetch("/api/timeblocks/");
     if (response.ok) {
       const data = await response.json();
+      console.log("print out the timeblock data:", data);//debug
       
       if (Array.isArray(data)) {
         dispatch(setAllTimeblocks(data));
@@ -109,6 +110,39 @@ export const createTimeblockThunk = (timeblockData) => async (dispatch) => {
     return { error: "Network error occurred" };
   }
 };
+
+
+// export const createTimeblockThunk = (timeblockData) => async (dispatch) => {
+  
+//   try {
+//     // console.log('Sending to backend:', timeblockData); // Add this for debugging
+//     const response = await fetch('/api/timeblocks/', {
+//       method: 'POST',
+//       headers: {
+//         "Content-Type": "application/json",
+//         "XSRF-TOKEN": Cookies.get("XSRF-TOKEN")
+//       },
+//       body: JSON.stringify(timeblockData),
+//       credentials: 'include'
+//     });
+
+//     if (response.ok) {
+//       const newTimeblock = await response.json();
+//       console.log("Created timeblock:", newTimeblock);
+
+//       await dispatch(createTimeblock(newTimeblock));
+//       await dispatch(setAllTimeblocksThunk());
+//       return newTimeblock;
+//     } else {
+//       const errorData = await response.json();
+//       console.error("Error response:", errorData);
+//       return { error: errorData.errors?.message || "Failed to create timeblock" };
+//     }
+//   } catch (error) {
+//     console.error("Network error:", error);
+//     return { error: "Network error occurred" };
+//   }
+// };
 
 // Edit a specific timeblock
 export const editTimeblockThunk = (timeblockData) => async (dispatch) => {
