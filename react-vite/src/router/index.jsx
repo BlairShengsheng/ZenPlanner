@@ -13,6 +13,7 @@ import { ViewAllHabit } from '../components/Habit/ViewAllHabits';
 import { CombinedPage } from '../components/CombineComponent/CombinePage';
 import { ViewAllTimeBlocks } from '../components/TimeBlock/ViewAllTimeBlocks';
 import { CreateTimeBlock } from '../components/TimeBlock/CreateTimeBlock';
+import { EditTimeBlock } from '../components/TimeBlock/EditTimeBlock';
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "timeblocks/new",
         element:<CreateTimeBlock />
+      },
+      {
+        path: "timeblocks/:timeblockId/edit",
+        element: <EditTimeBlock />
       }
 
     ],

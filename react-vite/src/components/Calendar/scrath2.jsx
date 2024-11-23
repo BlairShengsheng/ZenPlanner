@@ -1,310 +1,188 @@
-// import { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-// import FullCalendar from '@fullcalendar/react';
-// import timeGridPlugin from '@fullcalendar/timegrid';
-// import interactionPlugin from '@fullcalendar/interaction';
-// import {
-//   setAllTimeblocksThunk,
-//   createTimeblockThunk,
-//   editTimeblockThunk,
-//   deleteTimeblockThunk
-// } from '../../redux/timeblocks';
-// import { TimeBlockModal } from './TimeBlockModal';
-// import './DailyScheduler.css';
+import { useState, useEffect } from 'react';
+import './TimeBlockModal.css';
 
-// export const DailyScheduler = ({ selectedDate }) => {
-//   //At Component mount
-//   console.log('🔵 DailyScheduler - Component mounting');
-//   console.log('📅 Selected Date:', selectedDate);
+export const TimeBlockModal = ({ 
+  isOpen, 
+  onClose, 
+  onSubmit, 
+  onDelete,
+  timeblock,
+  initialTimeSlot,
+  error 
+}) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    start_time: '',
+    end_time: ''
+  });
 
+  // Format datetime for input datetime-local
+  const formatDateForInput = (date) => {
+    if (!date) return '';
+    
+    // If date is a string, convert it to Date object
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    
+    if (!(dateObj instanceof Date) || isNaN(dateObj)) return '';
 
+    // Format to local datetime string and slice off seconds
+    return dateObj.toISOString().slice(0, 16);
+  };
 
+  // Format datetime for API
+  const formatDateForAPI = (dateStr) => {
+    if (!dateStr) return '';
+    
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return '';
 
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const sessionUser = useSelector(state => state.session.user);
-//   const timeblocks = useSelector(state => state.timeblocks.allTimeblocks);
+    // Get local ISO string parts
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
 
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [selectedTimeblock, setSelectedTimeblock] = useState(null);
-//   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    // Format as YYYY-MM-DD HH:mm:ss
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
 
-//   const [error, setError] = useState(null);
+  useEffect(() => {
+    if (timeblock) {
+      // Editing existing timeblock
+      setFormData({
+        name: timeblock.name || '',
+        description: timeblock.description || '',
+        start_time: formatDateForInput(timeblock.start_time) || '',
+        end_time: formatDateForInput(timeblock.end_time) || ''
+      });
+    } else if (initialTimeSlot) {
+      // Creating new timeblock with initial time slot
+      setFormData(prev => ({
+        ...prev,
+        start_time: formatDateForInput(initialTimeSlot.start_time),
+        end_time: formatDateForInput(initialTimeSlot.end_time)
+      }));
+    }
+  }, [timeblock, initialTimeSlot]);
 
-//   // Redirect if not logged in
-//   useEffect(() => {
-//     if (!sessionUser) {
-//       navigate('/login');
-//     }
-//   }, [sessionUser, navigate]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
- 
-//   useEffect(() => {
-//     if (sessionUser) {
-//       console.log('👤 User detected, fetching timeblocks...');// trace
-//       dispatch(setAllTimeblocksThunk());
-//     }
-//   }, [dispatch, sessionUser]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Validate times
+    const startDate = new Date(formData.start_time);
+    const endDate = new Date(formData.end_time);
+    
+    if (endDate <= startDate) {
+      alert('End time must be after start time');
+      return;
+    }
 
+    // Prepare data for submission
+    const submissionData = {
+      ...(timeblock?.id && { id: timeblock.id }),
+      name: formData.name.trim(),
+      description: formData.description.trim(),
+      start_time: formatDateForAPI(formData.start_time),
+      end_time: formatDateForAPI(formData.end_time)
+    };
 
-//    // Track timeblocks changes
-//   useEffect(() => {
-//     console.log('📦 Timeblocks from Redux:', timeblocks);
-//     // Log processed events for FullCalendar
-//     console.log('🗓️ Processed events:', Object.values(timeblocks)
-//       .filter(timeblock => timeblock.user_id === sessionUser.id)
-//       .map(timeblock => ({
-//         id: timeblock.id,
-//         title: timeblock.name,
-//         start: timeblock.start_time,
-//         end: timeblock.end_time
-//       }))
-//     );
-//   }, [timeblocks]);
+    onSubmit(submissionData);
+  };
 
+  if (!isOpen) return null;
 
+  return (
+    <div className="modal-overlay" onClick={(e) => {
+      if (e.target === e.currentTarget) onClose();
+    }}>
+      <div className="modal-content">
+        <h2>{timeblock ? 'Update' : 'Create'} Time Block</h2>
+        
+        {error && <div className="error-message">{error}</div>}
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
+          <div className="form-group">
+            <label htmlFor="description">Description:</label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+              rows={4}
+              className="form-input"
+            />
+          </div>
 
+          <div className="form-group">
+            <label htmlFor="start_time">Start Time:</label>
+            <input
+              type="datetime-local"
+              id="start_time"
+              name="start_time"
+              value={formData.start_time}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
-//   const handleDateSelect = (selectInfo) => {
-//     if (!sessionUser) {
-//       setError('Please log in to create timeblocks');
-//       return;
-//     }
+          <div className="form-group">
+            <label htmlFor="end_time">End Time:</label>
+            <input
+              type="datetime-local"
+              id="end_time"
+              name="end_time"
+              value={formData.end_time}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
-//     setSelectedTimeSlot({
-//       start_time: selectInfo.startStr,
-//       end_time: selectInfo.endStr
-//     });
-//     setIsModalOpen(true);
-//     selectInfo.view.calendar.unselect();
-//   };
-
-//   const handleEventClick = (clickInfo) => {
-//     if (!sessionUser) {
-//       setError('Please log in to edit timeblocks');
-//       return;
-//     }
-
-//     const timeblock = {
-//       id: clickInfo.event.id,
-//       name: clickInfo.event.title,
-//       description: clickInfo.event.extendedProps.description,
-//       start_time: clickInfo.event.start.toISOString().replace('T', ' ').substring(0, 19),
-//       end_time: clickInfo.event.end.toISOString().replace('T', ' ').substring(0, 19)
-//     };
-//     setSelectedTimeblock(timeblock);
-//     setIsModalOpen(true);
-//   };
-
-
-//   //Add some trace back over here for 'Event Handlers'
-//   const handleModalSubmit = async (formData) => {
-//     console.log('📝 Modal Submit - Form Data:', formData);
-
-//     try {
-//       if (!sessionUser) {
-//         setError('Please log in to modify timeblocks');
-//         return;
-//       }
-
-//       if (selectedTimeblock) {
-//         // Update existing timeblock
-//         console.log('✏️ Updating timeblock:', selectedTimeblock.id);//trace
-
-
-//         const result = await dispatch(editTimeblockThunk({
-//           id: selectedTimeblock.id,
-//           user_id: sessionUser.id,
-//           ...formData
-//         }));
-//         console.log('📤 Update result:', result);//trace
-
-
-//         if (result?.error) {
-//           setError(result.error);
-//           return;
-//         }
-
-//       } else {
-//         // Create new timeblock
-//         const newTimeblock = {
-//           ...formData,
-//           user_id: sessionUser.id,
-//           start_time: selectedTimeSlot?.start_time || formData.start_time,
-//           end_time: selectedTimeSlot?.end_time || formData.end_time
-//         };
-//         console.log('Creating timeblock with data:', newTimeblock);
-
-//         const result = await dispatch(createTimeblockThunk(newTimeblock));
-//         if (result?.error) {
-//           setError(result.error);
-//           return;
-//         }
-//       }
-//       handleModalClose();
-//     } catch (err) {
-//       setError('Failed to save timeblock');
-//       console.error('Error saving timeblock:', err);
-//     }
-//   };
-
-//   const handleEventDrop = async (dropInfo) => {
-//     try {
-//       if (!sessionUser) {
-//         dropInfo.revert();
-//         setError('Please log in to modify timeblocks');
-//         return;
-//       }
-
-//       const updatedTimeblock = {
-//         id: dropInfo.event.id,
-//         user_id: sessionUser.id,
-//         name: dropInfo.event.title,
-//         description: dropInfo.event.extendedProps.description,
-//         start_time: dropInfo.event.start.toISOString().replace('T', ' ').substring(0, 19),
-//         end_time: dropInfo.event.end.toISOString().replace('T', ' ').substring(0, 19)
-//       };
-      
-//       const result = await dispatch(editTimeblockThunk(updatedTimeblock));
-//       if (result?.error) {
-//         setError(result.error);
-//         dropInfo.revert();
-//       }
-//     } catch (err) {
-//       setError('Failed to update timeblock');
-//       dropInfo.revert();
-//     }
-//   };
-
-//   const handleEventResize = async (resizeInfo) => {
-//     try {
-//       if (!sessionUser) {
-//         resizeInfo.revert();
-//         setError('Please log in to modify timeblocks');
-//         return;
-//       }
-
-//       const updatedTimeblock = {
-//         id: resizeInfo.event.id,
-//         user_id: sessionUser.id,
-//         name: resizeInfo.event.title,
-//         description: resizeInfo.event.extendedProps.description,
-//         start_time: resizeInfo.event.start.toISOString().replace('T', ' ').substring(0, 19),
-//         end_time: resizeInfo.event.end.toISOString().replace('T', ' ').substring(0, 19)
-//       };
-      
-//       const result = await dispatch(editTimeblockThunk(updatedTimeblock));
-//       if (result?.error) {
-//         setError(result.error);
-//         resizeInfo.revert();
-//       }
-//     } catch (err) {
-//       setError('Failed to resize timeblock');
-//       resizeInfo.revert();
-//     }
-//   };
-
-//   const handleDelete = async (timeblockId) => {
-//     try {
-//       if (!sessionUser) {
-//         setError('Please log in to delete timeblocks');
-//         return;
-//       }
-
-//       const result = await dispatch(deleteTimeblockThunk(timeblockId));
-//       if (result?.error) {
-//         setError(result.error);
-//         return;
-//       }
-//       handleModalClose();
-//     } catch (err) {
-//       setError('Failed to delete timeblock');
-//     }
-//   };
-
-//   const handleModalClose = () => {
-//     setIsModalOpen(false);
-//     setSelectedTimeblock(null);
-//     setSelectedTimeSlot(null);
-//     setError(null);
-//   };
-
-//   if (!sessionUser) {
-//     return <div className="auth-message">Please log in to view your schedule</div>;
-//   }
-
-
-
-
-
-
-//   return (
-//     <div className="daily-scheduler">
-//       {error && (
-//         <div className="error-message">
-//           {error}
-//         </div>
-//       )}
-
-//       <FullCalendar
-//         plugins={[timeGridPlugin, interactionPlugin]}
-//         initialView="timeGridDay"
-//         initialDate={selectedDate}
-//         headerToolbar={{
-//           left: 'prev,next',
-//           center: 'title',
-//           right: 'timeGridDay'
-//         }}
-//         slotMinTime="05:00:00"
-//         slotMaxTime="22:00:00"
-//         height="auto"
-//         expandRows={true}
-//         selectable={true}
-//         selectMirror={true}
-//         dayMaxEvents={true}
-//         events={Object.values(timeblocks)
-//           .filter(timeblock => timeblock.user_id === sessionUser.id)
-//           .map(timeblock => ({
-//             id: timeblock.id,
-//             title: timeblock.name,
-//             description: timeblock.description,
-//             start: timeblock.start_time,
-//             end: timeblock.end_time,
-//             extendedProps: { ...timeblock }
-//           }))}
-//         select={handleDateSelect}
-//         eventClick={handleEventClick}
-//         eventDrop={handleEventDrop}
-//         eventResize={handleEventResize}
-//         editable={true}
-//         dragScroll={true}
-//         dayHeaderFormat={{ 
-//           weekday: 'long', 
-//           month: 'long', 
-//           day: 'numeric', 
-//           year: 'numeric' 
-//         }}
-//         allDaySlot={false}
-//         slotDuration="01:00:00"
-//         slotLabelInterval="01:00:00"
-//         slotLabelFormat={{
-//           hour: '2-digit',
-//           minute: '2-digit',
-//           hour12: false
-//         }}
-//       />
-
-//       <TimeBlockModal
-//         isOpen={isModalOpen}
-//         onClose={handleModalClose}
-//         onSubmit={handleModalSubmit}
-//         onDelete={handleDelete}
-//         timeblock={selectedTimeblock}
-//         initialTimeSlot={selectedTimeSlot}
-//         error={error}
-//       />
-//     </div>
-//   );
-// };
+          <div className="button-group">
+            <button type="submit" className="submit-btn">
+              {timeblock ? 'Update' : 'Create'}
+            </button>
+            {timeblock && (
+              <button 
+                type="button" 
+                className="delete-btn"
+                onClick={() => onDelete?.(timeblock.id)}
+              >
+                Delete
+              </button>
+            )}
+            <button type="button" className="cancel-btn" onClick={onClose}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
