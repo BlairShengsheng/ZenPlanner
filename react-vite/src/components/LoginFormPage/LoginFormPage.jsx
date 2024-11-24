@@ -14,6 +14,14 @@ function LoginFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
+  const handleDemoLogin = () =>{
+    const user = {
+      email: 'demo@aa.io',
+      password: 'password'
+    };
+    return dispatch(thunkLogin(user));
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -58,6 +66,7 @@ function LoginFormPage() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+        <button type="button" onClick={handleDemoLogin}>Demo Login</button>
       </form>
     </>
   );
