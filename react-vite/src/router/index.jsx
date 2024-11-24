@@ -14,6 +14,7 @@ import { CombinedPage } from '../components/CombineComponent/CombinePage';
 import { ViewAllTimeBlocks } from '../components/TimeBlock/ViewAllTimeBlocks';
 import { CreateTimeBlock } from '../components/TimeBlock/CreateTimeBlock';
 import { EditTimeBlock } from '../components/TimeBlock/EditTimeBlock';
+import { MonthlyCalendar } from '../components/Calendar/MonthlyCalendar';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,14 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element:<CalendarContainer />
+      },
+      {
+        path: "monthly",  // This matches the navigation to /monthly
+        element: <MonthlyCalendar />
+      },
+      {
+        path: "combine",  // This matches the navigation to /combine
+        element: <CombinedPage />
       },
       {
         path: "login",
@@ -46,10 +55,6 @@ export const router = createBrowserRouter([
       {
         path: "habits/new",
         element: <CreateHabit />
-      },
-      {
-        path: "combine/",
-        element: <CombinedPage />
       },
       {
         path: "timeblocks/",
