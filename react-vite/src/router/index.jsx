@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
         element: <CreateHabit />
       },
       {
-        path: "daily/",
+        path: "combine/",
         element: <CombinedPage />
       },
       {
