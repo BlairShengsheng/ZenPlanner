@@ -5,9 +5,9 @@ import Layout from './Layout';
 
 
 import { ViewAllToDoList } from '../components/ToDoList/ViewAllToDoList';
-import { CreateTask } from '../components/ToDoList/CreateToDos';
+// import { CreateTask } from '../components/ToDoList/CreateToDos';
 import { CalendarContainer } from '../components/Calendar/CalendarContainer';
-import { CreateHabit } from '../components/Habit/CreateHabits';
+// import { CreateHabit } from '../components/Habit/CreateHabits';
 import { ViewAllHabit } from '../components/Habit/ViewAllHabits';
 
 import { CombinedPage } from '../components/CombineComponent/CombinePage';
@@ -44,18 +44,18 @@ export const router = createBrowserRouter([
         path: "tasks/",
         element: <ViewAllToDoList />,
       },
-      {
-        path: "tasks/new",
-        element: <CreateTask />
-      },
+      // {
+      //   path: "tasks/new",
+      //   element: <CreateTask />
+      // },
       {
         path: "habits/",
         element:<ViewAllHabit />
       },
-      {
-        path: "habits/new",
-        element: <CreateHabit />
-      },
+      // {
+      //   path: "habits/new",
+      //   element: <CreateHabit />
+      // },
       {
         path: "timeblocks/",
         element: <ViewAllTimeBlocks />

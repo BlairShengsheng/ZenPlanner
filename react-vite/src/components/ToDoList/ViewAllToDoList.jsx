@@ -1,10 +1,12 @@
 // ViewAllToDoList.jsx
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { setAllTasksThunk, deleteATaskThunk } from "../../redux/tasks";
 import DeleteConfirmationModal from "./DeleteToDos";
 import EditConfirmationModal from "./EditToDos";
+
+import { CreateTaskModal } from './CreateToDos'; 
 
 import { DndContext, TouchSensor, PointerSensor, KeyboardSensor, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
@@ -25,6 +27,10 @@ export const ViewAllToDoList = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+
+  // Add new state for create modal
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -97,8 +103,19 @@ export const ViewAllToDoList = () => {
 
   return (
     <div className="ToDos-Page">
-      <h1>To Do List
+      {/* <h1>To Do List
       <NavLink to='/tasks/new' title="Create a new To Do List">  ✚</NavLink>
+      </h1> */}
+
+      <h1>
+        To Do List
+        <button 
+          onClick={() => setShowCreateModal(true)} 
+          className="add-task-button"
+          title="Create a new To Do List"
+        >  
+          ✚
+        </button>
       </h1>
 
       <DndContext
@@ -123,6 +140,14 @@ export const ViewAllToDoList = () => {
           )}
         </div>
       </DndContext>
+
+      <CreateTaskModal
+        isOpen={showCreateModal}
+        onClose={() => {
+          setShowCreateModal(false);
+          dispatch(setAllTasksThunk());
+        }}
+      />
 
       <EditConfirmationModal
         show={showEditModal}
