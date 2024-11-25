@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -14,6 +15,8 @@ import './DailyScheduler.css';
 
 export const DailyScheduler = ({ selectedDate }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const sessionUser = useSelector(state => state.session.user);
   const timeblockObj = useSelector(state => state.timeblocks.allTimeblocks);
   const [showModal, setShowModal] = useState(false);
@@ -138,6 +141,23 @@ export const DailyScheduler = ({ selectedDate }) => {
     }
   };
 
+
+  // const handleBackToMonth = () => {
+  //   navigate('/monthly');
+  // };
+
+  const handleBackToMonth = () => {
+    // Pass the selectedDate back to the monthly view
+    navigate('/monthly', {
+      state: { 
+        selectedDate: selectedDate || new Date()
+      }
+    });
+  };
+
+
+  
+
   return (
     <div className="daily-scheduler">
       {!sessionUser ? (
@@ -145,6 +165,14 @@ export const DailyScheduler = ({ selectedDate }) => {
       ) : (
         <>
           {error && <div className="error-banner">{error}</div>}
+
+          <div className="calendar-navigation">
+            <button onClick={handleBackToMonth} className="back-button">
+             Back to Month View
+            </button>
+          </div>
+
+
           <FullCalendar
             plugins={[timeGridPlugin, interactionPlugin]}
             initialView="timeGridDay"

@@ -1,7 +1,6 @@
-// MonthlyCalendar.jsx
-
 //this one fix the month to day
 
+// MonthlyCalendar.jsx
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './MonthlyCalendar.css';
@@ -13,7 +12,14 @@ export const MonthlyCalendar = ({ onDaySelect }) => {
   // Get the selected date from navigation state or use current date as fallback
   const [currentDate, setCurrentDate] = useState(() => {
     const locationDate = location.state?.selectedDate;
-    return locationDate ? new Date(locationDate) : new Date();
+    // return locationDate ? new Date(locationDate) : new Date();
+    if (locationDate) {
+      // If it's an ISO string, parse it
+      return typeof locationDate === 'string' 
+        ? new Date(locationDate)
+        : locationDate;
+    }
+    return new Date();
   });
 
   const months = [
@@ -45,14 +51,25 @@ export const MonthlyCalendar = ({ onDaySelect }) => {
     }
     navigate('/combine', { 
       state: { 
-        selectedDate: date.toISOString() // Convert to ISO string for better serialization
+        selectedDate: date.toISOString(), // Convert to ISO string for better serialization
+        returnMonth: currentDate // Store the current month view
       } 
     });
   };
 
+  // const handleBackToYear = () => {
+  //   navigate('/');
+  // };
+
+
   const handleBackToYear = () => {
-    navigate('/');
+    navigate('/', {
+      state: {
+        selectedDate: currentDate // Pass the current date back to year view
+      }
+    });
   };
+
 
   const renderCalendarDays = () => {
     const daysInMonth = getDaysInMonth(currentDate);
