@@ -228,6 +228,8 @@ export const CreateTaskModal = ({ isOpen, onClose }) => {
     const validationErrors = {};
     if(!name.trim()) validationErrors.name = "name is required";
     if(!description.trim()) validationErrors.description = "description is required";
+    if (name.length > 100) validationErrors.name = "Task name cannot exceed 100 characters";
+    if (description.length > 200) validationErrors.description = "Description cannot exceed 200 characters";
 
     setErrors(validationErrors);
 
