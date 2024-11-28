@@ -1,4 +1,4 @@
-.profile-dropdown {
+/* .profile-dropdown {
   position: absolute;
 
   
@@ -31,4 +31,92 @@
 
 .hidden{
   display: none;
+} */
+
+
+
+
+
+
+
+/* Profile dropdown menu in ProfileButton.jsx*/
+.profile-dropdown {
+  position: absolute;
+  top: 40px;  /* Changed from bottom: 100% to top: 40px */
+  right: 0;
+  background-color: #f0f0f0;
+  padding: 20px;  /* Reduced padding to make it more compact */
+  border-radius: 5px;
+  border: 6px solid rgb(232, 215, 194);
+  min-width: 200px;
+  z-index: 1000;
+  list-style: none;
+ 
+}
+
+/* Profile button container - Added this to ensure proper positioning */
+.profile-button {
+  position: relative;
+}
+
+/* Profile dropdown items */
+.profile-dropdown li {
+  margin: 10px 0;
+  list-style: none;
+  padding: 5px 0;
+}
+
+
+
+
+
+/* Wrapper for the entire navigation area */
+.wrapper { 
+  display: flex; /* Uses Flexbox layout for child elements */
+  flex-direction: row-reverse; /* Reverses the default row direction (right-to-left layout) */
+  justify-content: space-between;    
+  align-items: center;     
+  width: 100%; /* Ensures the wrapper spans the full width of the parent container */
+  height: 50px; /* Sets the height of the wrapper to 50px */
+  background-color: #f0f0f0; /* Sets a light gray background color */
+  z-index: 1; /* Places the wrapper above other elements with a lower z-index */
+}
+
+/* Styling for the area containing navigation links */
+.nav-link-area { 
+  display: flex; /* Uses Flexbox layout for the navigation links */
+  flex-direction: row; /* Aligns items in a row (default direction for Flexbox) */
+  align-items: center; /* Vertically centers the navigation links within their container */
+  gap: 15px; /* Adds 15px space between navigation link items */
+  padding-right: 50px; /* Adds 50px padding to the right for spacing */
+  font-weight: bold;
+
+}
+
+/* Hidden utility class to hide elements */
+.hidden { 
+  display: none; /* Completely hides the element by removing it from the layout */
+}
+
+
+
+
+.nav-link-area a, .nav-link-area-two a {
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Makes the color inherit from the parent element */
+}
+
+.nav-link-area-two {
+  /* background-color: rgb(206, 156, 156); */
+  width: 700px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color:rgb(105, 65, 4)
+}
+
+
+/* Username display */
+.user-name {
+  margin-left: 20px;
 }
