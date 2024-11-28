@@ -12,7 +12,8 @@ import { DndContext, TouchSensor, PointerSensor, KeyboardSensor, closestCorners,
 import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
 import { SortableTodoItem } from "./SortableTodoItem";
-import "./list.css"
+// import "./list.css"
+import "./ToDoList.css";
 
 
 
