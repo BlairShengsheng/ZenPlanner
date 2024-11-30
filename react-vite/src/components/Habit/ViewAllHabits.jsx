@@ -102,20 +102,20 @@ export const ViewAllHabit = () => {
 
   return (
     <div className="habit-page">
-      {/* <h1>Habit List
-      <NavLink to='/habits/new' title="Create a new Habit List">  ✚</NavLink>
-      </h1> */}
 
-      <h1>
-        Habit List
-        <button 
-          onClick={() => setShowCreateModal(true)} 
-          className="add-habit-button"
-          title="Create a new Habit List"
-        >  
-          ✚
-        </button>
-      </h1>
+      <div className="habit-header">
+
+        <h1>
+          Habit List
+          <button 
+            onClick={() => setShowCreateModal(true)} 
+            className="add-habit-button"
+            title="Create a new Habit List"
+          >  
+            add ✚
+          </button>
+        </h1>
+      </div>
 
 
         <DndContext 

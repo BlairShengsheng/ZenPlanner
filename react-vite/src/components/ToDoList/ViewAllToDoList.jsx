@@ -103,81 +103,88 @@ export const ViewAllToDoList = () => {
   };
 
   return (
-    <div className="ToDos-Page">
-      {/* <h1>To Do List
-      <NavLink to='/tasks/new' title="Create a new To Do List">  ✚</NavLink>
-      </h1> */}
+    <div className="to-do-page">
 
-      <h1>
-        To Do List
-        <button 
-          onClick={() => setShowCreateModal(true)} 
-          className="add-task-button"
-          title="Create a new To Do List"
-        >  
-          ✚
-        </button>
-      </h1>
+      <div className="to-dos-header">
 
-      <DndContext
-        sensors={sensors}
-        onDragEnd={handleDragEnd}
-        collisionDetection={closestCorners}
-      >
-        <div className="ToDos-Column">
-          {todos.length > 0 ? (
-          <SortableContext items={todos} strategy={verticalListSortingStrategy}>
-              {todos.map((todo) => (
-                <SortableTodoItem
-                  key={todo.id}
-                  todo={todo}
-                  onUpdate={(e) => handleEditClick(todo, e)}
-                  onDelete={(e) => handleDeleteClick(todo, e)}
-                />
-              ))}
-            </SortableContext>
-          ) : (
-            <p>No to dos found. Create a new to do list to get started!</p>
-          )}
-        </div>
-      </DndContext>
+        <h1>
+          To Do List
+          <button 
+            onClick={() => setShowCreateModal(true)} 
+            className="add-task-button"
+            title="Create a new To Do List"
+          >  
+            add ✚
+          </button>
+        </h1>
+      </div>
 
-      <CreateTaskModal
-        isOpen={showCreateModal}
-        onClose={() => {
-          setShowCreateModal(false);
-          dispatch(setAllTasksThunk());
-        }}
-      />
+      <div className="to-dos-content">
 
-      <EditConfirmationModal
-        show={showEditModal}
-        onClose={() => {
-          setShowEditModal(false);
-          setSelectedTodo(null);
-          dispatch(setAllTasksThunk());
-        }}
-        todoData={selectedTodo}
-      />
+        <DndContext
+          sensors={sensors}
+          onDragEnd={handleDragEnd}
+          collisionDetection={closestCorners}
+        >
+          <div className="to-dos-column">
+            {todos.length > 0 ? (
+            <SortableContext items={todos} strategy={verticalListSortingStrategy}>
+                {todos.map((todo) => (
+                  <SortableTodoItem
+                    key={todo.id}
+                    todo={todo}
+                    onUpdate={(e) => handleEditClick(todo, e)}
+                    onDelete={(e) => handleDeleteClick(todo, e)}
+                  />
+                ))}
+              </SortableContext>
+            ) : (
+              <p>No to dos found. Create a new to do list to get started!</p>
+            )}
+          </div>
+        </DndContext>
 
-      <DeleteConfirmationModal 
-        show={showDeleteModal}
-        onConfirm={async () => {
-          try {
-            if (selectedTodo?.id) {
-              await dispatch(deleteATaskThunk(selectedTodo.id));
-              await dispatch(setAllTasksThunk());
+        <CreateTaskModal
+          isOpen={showCreateModal}
+          onClose={() => {
+            setShowCreateModal(false);
+            dispatch(setAllTasksThunk());
+          }}
+        />
+
+        <EditConfirmationModal
+          show={showEditModal}
+          onClose={() => {
+            setShowEditModal(false);
+            setSelectedTodo(null);
+            dispatch(setAllTasksThunk());
+          }}
+          todoData={selectedTodo}
+        />
+
+        <DeleteConfirmationModal 
+          show={showDeleteModal}
+          onConfirm={async () => {
+            try {
+              if (selectedTodo?.id) {
+                await dispatch(deleteATaskThunk(selectedTodo.id));
+                await dispatch(setAllTasksThunk());
+              }
+            } finally {
+              setShowDeleteModal(false);
+              setSelectedTodo(null);
             }
-          } finally {
+          }}
+          onCancel={() => {
             setShowDeleteModal(false);
             setSelectedTodo(null);
-          }
-        }}
-        onCancel={() => {
-          setShowDeleteModal(false);
-          setSelectedTodo(null);
-        }}
-      />
+          }}
+        />
+
+      </div>
+
+    
+    
     </div>
   );
 };
