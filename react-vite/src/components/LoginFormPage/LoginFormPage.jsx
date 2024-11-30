@@ -15,7 +15,7 @@ function LoginFormPage() {
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
 
-  // actually we don't this for the demon user, just need to do it in login form modal
+  // actually we don't need to do this for the demon user, just need to do it in login form modal
   const handleDemoLogin = (e) => {
     e.preventDefault();
 
@@ -56,6 +56,7 @@ function LoginFormPage() {
             <input
               type="text"
               value={email}
+              placeholder="Please enter your email......"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -66,6 +67,7 @@ function LoginFormPage() {
             <input
               type="password"
               value={password}
+              placeholder="Please enter your password......"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
