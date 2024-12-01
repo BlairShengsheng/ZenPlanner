@@ -1,65 +1,50 @@
 
-/* HabitList.css */
+body {
+  background-image: url('/images/image3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
 
 
 .habit-page {
-  min-height: 100vh;
-  padding: 2rem;
- 
-
-}
-
-.habit-header {
   max-width: 800px;
   margin: 0 auto;
-}
+  padding: 20px;
 
-.habit-header h1 {
-  color: #000;
+}
+h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1rem;
-  font-size: 2rem;
-  font-weight: 700;
+  margin-bottom: 24px;
 }
+
 
 .add-habit-button {
   padding: 8px 16px;
-  background: transparent;
+  background: #e2da4a;
+  color: white;
   border: none;
-  color: #000;
-  font-size: 1rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.add-habit-button:hover {
-  opacity: 0.7;
-}
 
 .habits-column {
-  max-width: 800px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 1rem;
-  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.habits-column p {
-  color: #666;
-  text-align: center;
-  padding: 2rem;
-}
+
+
 
 
 .habit-item {
@@ -70,9 +55,6 @@
   border-radius: 8px;
   gap: 15px;
 }
-
-
-
 
 /* Checkbox styling */
 .checkbox {

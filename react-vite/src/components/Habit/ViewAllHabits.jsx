@@ -103,7 +103,6 @@ export const ViewAllHabit = () => {
   return (
     <div className="habit-page">
 
-      <div className="habit-header">
 
         <h1>
           Habit List
@@ -115,7 +114,7 @@ export const ViewAllHabit = () => {
             add ✚
           </button>
         </h1>
-      </div>
+      
 
 
         <DndContext 

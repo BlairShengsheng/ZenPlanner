@@ -4,7 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 
 
-import { ViewAllToDoList2 } from '../components/ToDoList/ViewAllToDoList2';
+import { ViewAllToDoList } from '../components/ToDoList/ViewAllToDoList';
 // import { CreateTask } from '../components/ToDoList/CreateToDos';
 import { CalendarContainer } from '../components/Calendar/CalendarContainer';
 // import { CreateHabit } from '../components/Habit/CreateHabits';
@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "tasks/",
-        element: <ViewAllToDoList2 />,
+        element: <ViewAllToDoList />,
       },
       // {
       //   path: "tasks/new",
