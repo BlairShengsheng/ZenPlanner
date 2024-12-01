@@ -14,25 +14,25 @@ function LoginFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
-
-  // actually we don't need to do this for the demon user, just need to do it in login form modal
-  const handleDemoLogin = (e) => {
+  const handleDemoLogin = async (e) => { // Make this async
     e.preventDefault();
-
     setEmail("demo@aa.io");
     setPassword("password");
+    
+    const serverResponse = await dispatch(thunkLogin({  // Wait for the response
+      email: 'demo@aa.io',
+      password: 'password'
+    }));
 
-    const user = {
-      email:'demo@aa.io',
-      password:'password'
-    };
-    return dispatch(thunkLogin(user));
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      navigate("/");  // Navigate after successful login
+    }
   }
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const serverResponse = await dispatch(
       thunkLogin({
         email,
@@ -46,7 +46,6 @@ function LoginFormPage() {
       navigate("/");
     }
   };
-
 
   return (
     <div className="page-container">
@@ -81,7 +80,6 @@ function LoginFormPage() {
             <button type="submit">Log In</button>
             <button type="button" onClick={handleDemoLogin}>Demo Login</button>
           </div>
-
         </form>
       </div>
     </div>
