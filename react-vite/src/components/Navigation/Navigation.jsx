@@ -5,6 +5,8 @@ import "./Navigation.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { useEffect } from "react";
+
 // function Navigation() {
 //   return (
 //     <ul>
@@ -23,7 +25,18 @@ function Navigation() {
   const user = useSelector((store)=> store.session.user);
   const navigate = useNavigate();
 
-  if(!user) navigate(`/login`);
+  // if(!user) navigate(`/login`);
+
+  //The error occurs because you're calling navigate directly in the component body. In React, navigation should be handled within useEffect or event handlers.
+
+
+
+    // Use useEffect to handle navigation
+    useEffect(() => {
+      if (!user) {
+        navigate('/login');
+      }
+    }, [user, navigate]);
 
   return (
     <div className="wrapper">

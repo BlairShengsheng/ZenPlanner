@@ -8,8 +8,8 @@ function LoginFormPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
@@ -18,6 +18,9 @@ function LoginFormPage() {
   // actually we don't need to do this for the demon user, just need to do it in login form modal
   const handleDemoLogin = (e) => {
     e.preventDefault();
+
+    setEmail("demo@aa.io");
+    setPassword("password");
 
     const user = {
       email:'demo@aa.io',
@@ -43,6 +46,7 @@ function LoginFormPage() {
       navigate("/");
     }
   };
+
 
   return (
     <div className="page-container">
