@@ -74,7 +74,7 @@ export const SortableTodoItem = ({ todo, onUpdate, onDelete }) => {
           className="update-btn"
           onClick={onUpdate}
         >
-          Update 📝
+          Update
         </button>
         <button
           type="button"

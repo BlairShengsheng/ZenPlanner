@@ -1,90 +1,109 @@
-.todo-card-wrapper {
-  background: rgb(234, 226, 248);
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 8px 0;
+.to-dos-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.add-todo-button {
+  padding: 8px 16px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
   display: flex;
   align-items: center;
+  gap: 4px;
+}
+
+.to-dos-column {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.todo-card-wrapper {
+  background: rgb(234, 226, 248);
+  border-radius: 8px;
+  padding: 16px 20px;
   position: relative;
-  transition: all 0.3s ease;
-}
-
-.todo-card-wrapper.completed {
-  background-color: lightgray;
-  border-color:  #dee2e6;
-  opacity: 0.8;
-}
-
-.drag-handle {
-  cursor: grab;
-  padding: 0 8px;
-  color: #666;
-  font-size: 20px;
-  user-select: none;
+  margin-bottom: 8px;
 }
 
 .todo-content {
-  flex: 1;
   display: flex;
-  /* align-items: center; */
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Three dots menu */
+.drag-handle {
+  color: #666;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
 }
 
 .todo-text {
-  flex: 1;
-  transition: all 0.3s ease;
+  flex-grow: 1;
+  margin-right: auto;
 }
 
-.todo-text.completed h3,
-.todo-text.completed p {
-  text-decoration: line-through;
-  color: #6c757d;
-
-  position: relative;/* add this line */
-}
-
-.todo-text.completed h3::after,
-.todo-text.completed p::after {
-  content: ""; /* No additional text, just a line */
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%; /* Place the line in the middle */
-  height: 2px; /* Thickness of the line */
-  background-color: #6c757d; /* Same color as dimmed text */
-  z-index: 1; /* Ensures the line is above the text */
-
-}
-
-.todo-content h3 {
+.todo-text h3 {
   margin: 0;
-  font-size: 1.1rem;
-  color:#2c3e50;
-  transition: all 0.3s ease;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2c3e50;
 }
 
-.todo-content p {
-  margin: 4px 0 8px 0;
+.todo-text p {
   color: #666;
-  transition: all 0.3s ease;
+  margin: 4px 0;
 }
 
-.checkbox {
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  cursor: pointer;
-  position: relative;
-  top: 3px;
+/* Priority tags */
+.priority-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 8px;
 }
 
+.priority-tag.high {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.priority-tag.medium {
+  background-color: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ffcc80;
+}
+
+.priority-tag.low {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+/* Action buttons */
 .action-button {
   display: flex;
   gap: 8px;
+  margin-left: auto;
 }
 
 .update-btn,
@@ -94,7 +113,9 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .update-btn {
@@ -107,17 +128,8 @@
   color: white;
 }
 
-.update-btn:hover {
-  background: #357abd;
-}
-
-.delete-btn:hover {
-  background: #c0392b;
-}
-
-/* Modal Styles */
-.modal-overlay,
-.modal-widow {
+/* Modal styles */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -139,94 +151,37 @@
   width: 90%;
 }
 
-
-/* priority CSS */
-.priority-tag {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-top: 4px;
-  transition: all 0.3s ease; /* add this line */
+/* Empty state */
+.to-dos-column p {
+  text-align: center;
+  color: #666;
+  padding: 24px;
 }
 
-.priority-tag.high {
-  background-color: #ffebee;
-  color: #c62828;
-  border: 1px solid #ef9a9a;
-}
-
-.priority-tag.medium {
-  background-color: #fff3e0;
-  color: #ef6c00;
-  border: 1px solid #ffcc80;
-}
-
-.priority-tag.low {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  border: 1px solid #a5d6a7;
-}
-
-.priority-options {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.priority-label {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+/* Checkbox styles (if needed) */
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0;
   cursor: pointer;
 }
 
-.priority-label input[type="radio"] {
-  display: none;
-}
-
-.priority-btn {
-  padding: 6px 12px;
-  border-radius: 16px;
+/* Add icons for update button */
+.update-btn::after {
+  content: "✎";
   font-size: 14px;
-  font-weight: 500;
-  text-transform: capitalize;
-  transition: all 0.2s;
+  margin-left: 4px;
 }
 
-/* Priority button states */
-.priority-label input[type="radio"]:checked + .priority-btn.high {
-  background-color: #ffebee;
-  color: #c62828;
-  border: 1px solid #ef9a9a;
-}
-
-.priority-label input[type="radio"]:checked + .priority-btn.medium {
-  background-color: #fff3e0;
-  color: #ef6c00;
-  border: 1px solid #ffcc80;
-}
-
-.priority-label input[type="radio"]:checked + .priority-btn.low {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  border: 1px solid #a5d6a7;
-}
-
-/* Unchecked states */
-.priority-btn.high {
-  border: 1px solid #ffcdd2;
-  color: #c62828;
-}
-
-.priority-btn.medium {
-  border: 1px solid #ffe0b2;
-  color: #ef6c00;
-}
-
-.priority-btn.low {
-  border: 1px solid #c8e6c9;
-  color: #2e7d32;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .todo-content {
+    flex-direction: column;
+  }
+  
+  .action-button {
+    margin-top: 12px;
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
