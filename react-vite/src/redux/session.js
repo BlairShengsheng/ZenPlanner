@@ -1,3 +1,6 @@
+
+import Cookies from 'js-cookie';
+
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
@@ -22,13 +25,36 @@ export const thunkAuthenticate = () => async (dispatch) => {
 	}
 };
 
+// export const thunkLogin = (credentials) => async dispatch => {
+//   const response = await fetch("/api/auth/login", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(credentials)
+//   });
+
+//   if(response.ok) {
+//     const data = await response.json();
+//     dispatch(setUser(data));
+//   } else if (response.status < 500) {
+//     const errorMessages = await response.json();
+//     return errorMessages
+//   } else {
+//     return { server: "Something went wrong. Please try again" }
+//   }
+// };
+
+
 export const thunkLogin = (credentials) => async dispatch => {
   const response = await fetch("/api/auth/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: 'include',
+    headers: { 
+      "Content-Type": "application/json",
+      "XSRF-TOKEN": Cookies.get("XSRF-TOKEN")
+    },
     body: JSON.stringify(credentials)
   });
-
+  // rest of the code...
   if(response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
