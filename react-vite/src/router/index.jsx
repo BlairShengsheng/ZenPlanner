@@ -1,3 +1,5 @@
+//router/index.jsx
+
 import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
@@ -16,22 +18,97 @@ import { CreateTimeBlock } from '../components/TimeBlock/CreateTimeBlock';
 import { EditTimeBlock } from '../components/TimeBlock/EditTimeBlock';
 import { MonthlyCalendar } from '../components/Calendar/MonthlyCalendar';
 
+
+import { ProtectedRoute } from './ProtectedRoute';
+
+// export const router = createBrowserRouter([
+//   {
+//     element: <Layout />,
+//     children: [
+//       {
+//         path: "/",
+//         element:<CalendarContainer />
+//       },
+//       {
+//         path: "monthly",  // This matches the navigation to /monthly
+//         element: <MonthlyCalendar />
+//       },
+//       {
+//         path: "combine",  // This matches the navigation to /combine
+//         element: <CombinedPage />
+//       },
+//       {
+//         path: "login",
+//         element: <LoginFormPage />,
+//       },
+//       {
+//         path: "signup",
+//         element: <SignupFormPage />,
+//       },
+//       {
+//         path: "tasks/",
+//         element: <ViewAllToDoList />,
+//       },
+//       // {
+//       //   path: "tasks/new",
+//       //   element: <CreateTask />
+//       // },
+//       {
+//         path: "habits/",
+//         element:<ViewAllHabit />
+//       },
+//       // {
+//       //   path: "habits/new",
+//       //   element: <CreateHabit />
+//       // },
+//       {
+//         path: "timeblocks/",
+//         element: <ViewAllTimeBlocks />
+//       },
+//       {
+//         path: "timeblocks/new",
+//         element:<CreateTimeBlock />
+//       },
+//       {
+//         path: "timeblocks/:timeblockId/edit",
+//         element: <EditTimeBlock />
+//       }
+
+//     ],
+//   },
+// ]);
+
+
+
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
         path: "/",
-        element:<CalendarContainer />
+        element: (
+          <ProtectedRoute>
+            <CalendarContainer />
+          </ProtectedRoute>
+        )
       },
       {
-        path: "monthly",  // This matches the navigation to /monthly
-        element: <MonthlyCalendar />
+        path: "monthly",
+        element: (
+          <ProtectedRoute>
+            <MonthlyCalendar />
+          </ProtectedRoute>
+        )
       },
       {
-        path: "combine",  // This matches the navigation to /combine
-        element: <CombinedPage />
+        path: "combine",
+        element: (
+          <ProtectedRoute>
+            <CombinedPage />
+          </ProtectedRoute>
+        )
       },
+      // These routes don't need protection
       {
         path: "login",
         element: <LoginFormPage />,
@@ -40,35 +117,47 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignupFormPage />,
       },
+      // Protect the rest of your routes
       {
         path: "tasks/",
-        element: <ViewAllToDoList />,
+        element: (
+          <ProtectedRoute>
+            <ViewAllToDoList />
+          </ProtectedRoute>
+        ),
       },
-      // {
-      //   path: "tasks/new",
-      //   element: <CreateTask />
-      // },
       {
         path: "habits/",
-        element:<ViewAllHabit />
+        element: (
+          <ProtectedRoute>
+            <ViewAllHabit />
+          </ProtectedRoute>
+        ),
       },
-      // {
-      //   path: "habits/new",
-      //   element: <CreateHabit />
-      // },
       {
         path: "timeblocks/",
-        element: <ViewAllTimeBlocks />
+        element: (
+          <ProtectedRoute>
+            <ViewAllTimeBlocks />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "timeblocks/new",
-        element:<CreateTimeBlock />
+        element: (
+          <ProtectedRoute>
+            <CreateTimeBlock />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "timeblocks/:timeblockId/edit",
-        element: <EditTimeBlock />
+        element: (
+          <ProtectedRoute>
+            <EditTimeBlock />
+          </ProtectedRoute>
+        ),
       }
-
     ],
   },
 ]);

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 
+
 function LoginFormPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,8 +17,7 @@ function LoginFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
-
-
+  
 
   // actually we don't need to do this for the demon user, just need to do it in login form modal
   const handleDemoLogin =  async (e) => {
