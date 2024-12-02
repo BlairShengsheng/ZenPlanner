@@ -14,23 +14,6 @@ function LoginFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
-  const handleDemoLogin = async (e) => { // Make this async
-    e.preventDefault();
-    setEmail("demo@aa.io");
-    setPassword("password");
-    
-    const serverResponse = await dispatch(thunkLogin({  // Wait for the response
-      email: 'demo@aa.io',
-      password: 'password'
-    }));
-
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      navigate("/");  // Navigate after successful login
-    }
-  }
-
 
   const handleDemoLogin = async (e) => { // Make this async
     e.preventDefault();
