@@ -20,6 +20,14 @@ from .config import Config
 
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
 
+
+# Add these session configurations-------- change over here
+app.config.update(
+    SESSION_COOKIE_SECURE=True if os.environ.get('FLASK_ENV') == 'production' else False,
+    SESSION_COOKIE_SAMESITE='None' if os.environ.get('FLASK_ENV') == 'production' else 'Lax',
+    SESSION_COOKIE_HTTPONLY=True
+)
+
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
@@ -49,7 +57,18 @@ Migrate(app, db)
 
 # Application Security
 # CORS(app)
-CORS(app, supports_credentials=True)
+# CORS(app, supports_credentials=True)
+# ------------------------------------------------------ change over here
+CORS(app, 
+     supports_credentials=True,
+     resources={r"/api/*": {
+         "origins": ["http://localhost:5173", "https://zenplanner.onrender.com"],
+         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+         "allow_headers": ["Content-Type", "Authentication-Token", "Authorization", "X-CSRF-Token"],
+         "expose_headers": ["Content-Range", "X-Content-Range"],
+         "supports_credentials": True
+     }}
+)
 
 
 # Since we are deploying with Docker and Flask,
