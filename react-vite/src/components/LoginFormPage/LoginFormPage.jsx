@@ -12,7 +12,11 @@ function LoginFormPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
+ 
+
   if (sessionUser) return <Navigate to="/" replace={true} />;
+
+
 
 
   // actually we don't need to do this for the demon user, just need to do it in login form modal
@@ -25,6 +29,11 @@ function LoginFormPage() {
     };
     return dispatch(thunkLogin(user));
   }
+
+
+
+
+
 
 
   const handleSubmit = async (e) => {
@@ -43,6 +52,7 @@ function LoginFormPage() {
       navigate("/");
     }
   };
+
 
   return (
     <div className="page-container">
