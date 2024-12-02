@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import './TimeBlockModal.css';
 
@@ -100,6 +101,17 @@ export const TimeBlockModal = ({
     onSubmit(submissionData);
   };
 
+  // Updated handleDelete function
+  const handleDelete = async () => {
+    if (timeblock?.id && onDelete) {
+      // Ask for confirmation before deleting
+      if (window.confirm('Are you sure you want to delete this time block?')) {
+        await onDelete(timeblock.id);
+        onClose(); // Close the modal after deletion
+      }
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -172,7 +184,7 @@ export const TimeBlockModal = ({
               <button 
                 type="button" 
                 className="delete-btn"
-                onClick={() => onDelete?.(timeblock.id)}
+                onClick={handleDelete}  /* Changed to use handleDelete */
               >
                 Delete
               </button>

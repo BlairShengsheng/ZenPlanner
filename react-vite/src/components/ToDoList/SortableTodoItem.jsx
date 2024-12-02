@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import './SortableTodoItem.css';
 
 export const SortableTodoItem = ({ todo, onUpdate, onDelete }) => {
   const [isCompleted, setIsCompleted] = useState(false);// add this 
@@ -73,7 +74,7 @@ export const SortableTodoItem = ({ todo, onUpdate, onDelete }) => {
           className="update-btn"
           onClick={onUpdate}
         >
-          Update 📝
+          Update
         </button>
         <button
           type="button"

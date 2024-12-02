@@ -1,0 +1,130 @@
+.signup-modal {
+  background-color: #f8f6f4; /* Warm cream background */
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(164, 157, 150, 0.15);
+}
+
+.signup-modal h1 {
+  text-align: center;
+  color: #847973; /* Warm taupe */
+  margin-bottom: 1.75rem;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.signup-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.signup-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #9b928c; /* Soft warm gray */
+}
+
+.signup-modal input {
+  padding: 0.875rem;
+  border: 1px solid #e5e0dc; /* Light warm beige */
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+  color: #6b5f5a; /* Dark warm gray */
+}
+
+.signup-modal input:focus {
+  outline: none;
+  border-color: #c2b8b2; /* Medium warm taupe */
+  box-shadow: 0 0 0 3px rgba(194, 184, 178, 0.1);
+}
+
+.signup-modal button {
+  padding: 0.875rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  background-color: #9b8579; /* Rich taupe */
+  color: #ffffff;
+}
+
+.signup-modal button:hover {
+  background-color: #847973; /* Darker taupe */
+  transform: translateY(-1px);
+}
+
+.signup-modal p {
+  color: #c17f59; /* Warm terracotta for errors */
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .signup-modal {
+    padding: 1.75rem;
+    margin: 1rem;
+    width: auto;
+  }
+  
+  .signup-modal h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Smooth animation for modal appearance */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.signup-modal {
+  animation: modalFadeIn 0.4s ease-out;
+}
+
+/* Enhanced hover effects */
+.signup-modal input:hover {
+  border-color: #c2b8b2; /* Medium warm taupe */
+}
+
+/* Subtle gradient background */
+.signup-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #f8f6f4, #f0ebe7);
+  opacity: 0.7;
+  z-index: -1;
+  border-radius: 12px;
+}
+
+/* Optional: Add subtle texture */
+.signup-modal {
+  background-image: 
+    linear-gradient(45deg, rgba(155, 146, 140, 0.02) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(155, 146, 140, 0.02) 25%, transparent 25%);
+  background-size: 20px 20px;
+}

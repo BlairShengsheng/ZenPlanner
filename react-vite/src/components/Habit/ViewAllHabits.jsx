@@ -1,10 +1,11 @@
 // ViewAllHabits.jsx
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAHabitThunk, setAllHabitsThunk } from "../../redux/habits";
 import DeleteConfirmedModal from "./DeleteHabits";
 import EditConfirmedModal from "./EditHabits";
+import CreateHabitModal from "./CreateHabits";
 import "./habitList.css";
 
 
@@ -25,6 +26,9 @@ export const ViewAllHabit = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedHabit, setSelectedHabit] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Add new state for create modal
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor,{
@@ -98,9 +102,21 @@ export const ViewAllHabit = () => {
 
   return (
     <div className="habit-page">
-      <h1>Habit List
-      <NavLink to='/habits/new' title="Create a new Habit List">  ✚</NavLink>
-      </h1>
+
+
+        <h1>
+          Habit List
+          <button 
+            onClick={() => setShowCreateModal(true)} 
+            className="add-habit-button"
+            title="Create a new Habit List"
+          >  
+            add ✚
+          </button>
+        </h1>
+      
+
+
         <DndContext 
           sensors={sensors} 
           onDragEnd={handleDragEnd} 
@@ -123,6 +139,14 @@ export const ViewAllHabit = () => {
          </div>
 
         </DndContext>
+
+        <CreateHabitModal
+        isOpen={showCreateModal}
+        onClose={() => {
+          setShowCreateModal(false);
+          dispatch(setAllHabitsThunk());
+        }}
+      />
 
         <EditConfirmedModal
           show={showEditModal}

@@ -12,13 +12,14 @@ import { DndContext, TouchSensor, PointerSensor, KeyboardSensor, closestCorners,
 import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
 import { SortableTodoItem } from "./SortableTodoItem";
-import "./list.css"
+
+import "./ToDoList.css";
 
 
 
 
-//put it to combine page for displaying scheduler 
-export const ViewAllToDoList = () => {
+// put it to navigation bar 
+export const ViewAllToDoList2 = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const todoObj = useSelector(state => state.tasks.allTasks);
@@ -103,23 +104,23 @@ export const ViewAllToDoList = () => {
   };
 
   return (
-    <div className="to-dos-page">
+    <div className="to-do-page">
 
-      
+      <div className="to-dos-header">
 
         <h1>
           To Do List
           <button 
             onClick={() => setShowCreateModal(true)} 
-            className="add-todo-button"
+            className="add-task-button"
             title="Create a new To Do List"
           >  
             add ✚
           </button>
         </h1>
-      
+      </div>
 
-      
+      <div className="to-dos-content">
 
         <DndContext
           sensors={sensors}
@@ -181,6 +182,10 @@ export const ViewAllToDoList = () => {
           }}
         />
 
+      </div>
+
+    
+    
     </div>
   );
 };
