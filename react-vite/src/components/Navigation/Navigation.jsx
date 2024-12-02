@@ -4,6 +4,7 @@ import "./Navigation.css";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // function Navigation() {
 //   return (
@@ -23,7 +24,13 @@ function Navigation() {
   const user = useSelector((store)=> store.session.user);
   const navigate = useNavigate();
 
-  if(!user) navigate(`/login`);
+  // if(!user) navigate(`/login`);
+  useEffect(() => {
+    if(!user) navigate(`/login`);
+
+  },[navigate,user])
+
+
 
   return (
     <div className="wrapper">

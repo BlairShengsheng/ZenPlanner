@@ -20,14 +20,26 @@ function LoginFormPage() {
 
 
   // actually we don't need to do this for the demon user, just need to do it in login form modal
-  const handleDemoLogin = (e) => {
+  const handleDemoLogin =  async (e) => {
     e.preventDefault();
 
     const user = {
       email:'demo@aa.io',
       password:'password'
     };
-    return dispatch(thunkLogin(user));
+
+    // const serverResponse = await dispatch(thunkLogin(user));
+    // if (serverResponse) {
+    //   setErrors(serverResponse);
+    // } else {
+    //   navigate("/");
+    // }
+    
+    await dispatch(thunkLogin(user));
+    await navigate("/");
+
+
+    // return dispatch(thunkLogin(user));
   }
 
 
